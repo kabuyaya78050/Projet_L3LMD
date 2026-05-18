@@ -1,0 +1,135 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Liste Patients</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/reception.css' %}"
+    >
+
+</head>
+
+<body>
+
+    <div class="top-bar">
+
+        <h1>🏥 Liste des patients</h1>
+
+        <a
+            href="{% url 'ajoute' %}"
+            class="btn-ajouter"
+        >
+            ➕ Ajouter patient
+        </a>
+        
+        
+
+    </div>
+
+    <div class="card liste">
+
+        <form method="GET">
+
+            <div class="recherche-box">
+
+                <input
+                    type="text"
+                    name="recherche"
+                    placeholder="Rechercher..."
+                >
+
+                <button type="submit">
+                    Rechercher
+                </button>
+
+            </div>
+
+        </form>
+
+        <table>
+
+            <tr>
+
+                <th>Nom</th>
+                <th>Postnom</th>
+                <th>Prénom</th>
+                <th>Date naissance</th>
+                <th>Téléphone</th>
+                <th>Email</th>
+                <th>Couple</th>
+                <th>Nom mari</th>
+                <th>Statut</th>
+                <th>Action</th>
+
+            </tr>
+
+            {% for patient in patients %}
+
+            <tr>
+
+                <td>{{ patient.nom }}</td>
+
+                <td>{{ patient.postnom }}</td>
+
+                <td>{{ patient.prenom }}</td>
+
+                <td>
+                    {{ patient.date_naissance|date:"d/m/Y" }}
+                </td>
+
+                <td>{{ patient.telephone }}</td>
+
+                <td>{{ patient.email }}</td>
+
+                <td>
+
+                    {% if patient.est_en_couple %}
+                        Oui
+                    {% else %}
+                        Non
+                    {% endif %}
+
+                </td>
+
+                <td>{{ patient.nom_mari }}</td>
+
+                <td>{{ patient.statut }}</td>
+
+                <td>
+
+                    {% if patient.statut == 'reception' %}
+
+                    <a
+                        class="btn-envoyer"
+                        href="{% url 'envoyer_medecin' patient.id %}"
+                    >
+                        Envoyer
+                    </a>
+
+                    {% else %}
+
+                    <span class="btn-envoye">
+                        Envoyé
+                    </span>
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</body>
+</html>
