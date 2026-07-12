@@ -1,114 +1,130 @@
-body{
-    font-family: Arial;
-    background: #f4f6f9;
+/* =========================
+   BASE
+========================= */
+body {
     margin: 0;
-    padding: 20px;
+    font-family: "Segoe UI", sans-serif;
+    background: #f4f6f9;
 }
 
-h1{
-    color: #2c3e50;
-    margin-bottom: 20px;
-}
-
-.container{
-    display: flex;
-    gap: 20px;
-}
-
-.card{
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
-}
-
-.formulaire{
-    width: 35%;
-}
-
-.liste{
-    width: 65%;
-    overflow-x: auto;
-}
-
-.champ{
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-}
-
-label{
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-input, select{
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-button{
-    width: 100%;
-    padding: 12px;
-    border: none;
-    background: #27ae60;
+/* =========================
+   TOP BAR
+========================= */
+.top-bar {
+    background: #1e3a8a;
     color: white;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-button:hover{
-    background: #219150;
-}
-
-table{
-    width: 200%;
-    border-collapse: collapse;
-}
-
-table th{
-    background: #2c3e50;
-    color: white;
-    padding: 12px;
-}
-
-table td{
-    padding: 10px;
-    border: 1px solid #ddd;
-}
-
-.btn-envoyer{
-    background: #2980b9;
-    color: white;
-    padding: 7px 12px;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-.btn-envoye{
-    background: gray;
-    color: white;
-    padding: 7px 12px;
-    border-radius: 5px;
-}
-.top-bar{
+    padding: 15px 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
 }
 
-.btn-ajouter{
-    background: #27ae60;
+.top-bar h1 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.btn-ajouter {
+    background: #22c55e;
     color: white;
     padding: 10px 15px;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 6px;
+    font-weight: bold;
 }
 
-.formulaire-page{
-    width: 50%;
-    margin: auto;
+.btn-ajouter:hover {
+    background: #16a34a;
+}
+
+/* =========================
+   CARD FORM
+========================= */
+.card {
+    width: 60%;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* =========================
+   FORMULAIRE
+========================= */
+.formulaire-page form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.champ {
+    display: flex;
+    flex-direction: column;
+}
+
+.champ label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.champ input,
+.champ select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.champ input:focus,
+.champ select:focus {
+    border-color: #1e3a8a;
+    box-shadow: 0 0 5px rgba(30,58,138,0.3);
+}
+
+/* =========================
+   CHAMP CONJOINT
+========================= */
+#champ-mari {
+    grid-column: span 2;
+    display: none;
+}
+
+/* =========================
+   BUTTON
+========================= */
+button {
+    grid-column: span 2;
+    padding: 12px;
+    background: #1e3a8a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #1e40af;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+    .card {
+        width: 90%;
+    }
+
+    .formulaire-page form {
+        grid-template-columns: 1fr;
+    }
+
+    #champ-mari,
+    button {
+        grid-column: span 1;
+    }
 }

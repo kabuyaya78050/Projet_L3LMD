@@ -1,0 +1,236 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'patient.css' %}">
+
+
+<div class="dashboard-container">
+
+
+    <!-- HEADER -->
+
+    <div class="dashboard-header">
+
+        <div>
+            <h1>
+                Bonjour {{ patient.prenom }}
+            </h1>
+
+            <p>
+                Bienvenue dans votre espace santé
+            </p>
+        </div>
+
+
+        <a href="{% url 'logout_patient' %}"
+           class="btn-danger">
+            Déconnexion
+        </a>
+
+    </div>
+
+
+
+    <!-- INFORMATIONS -->
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <h3>
+                Profil
+            </h3>
+
+            <p>
+                <b>Nom :</b>
+                {{ patient.nom }}
+            </p>
+
+
+            <p>
+                <b>Téléphone :</b>
+                {{ patient.telephone }}
+            </p>
+
+
+            <p>
+                <b>Sexe :</b>
+                {{ patient.get_sexe_display }}
+            </p>
+
+
+        </div>
+
+
+
+        <div class="card">
+
+            <h3>
+                Rendez-vous
+            </h3>
+
+            <h1>
+                {{ total_rdv }}
+            </h1>
+
+            <p>
+                rendez-vous enregistrés
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+    <!-- ACTIONS -->
+
+    <h2>
+        Actions rapides
+    </h2>
+
+
+    <div class="actions">
+
+
+    <a href="{% url 'prendre_rendezvous' %}"
+   class="action-card">
+
+    📅
+
+    <h3>
+        Prendre rendez-vous
+    </h3>
+
+    <p>
+        Choisir un spécialiste et une date
+    </p>
+
+</a>
+
+
+
+        <a href="{% url 'paiement_mobile' %}"
+           class="action-card">
+
+            📱
+
+            <h3>
+                Paiement mobile
+            </h3>
+
+            <p>
+                Payer une consultation par mobile money
+            </p>
+
+        </a>
+
+
+
+        <a href=""
+           class="action-card">
+
+            👤
+
+            <h3>
+                Mon profil
+            </h3>
+
+            <p>
+                Modifier mes informations
+            </p>
+
+        </a>
+
+
+    </div>
+
+
+
+
+
+
+    <!-- RENDEZ-VOUS -->
+
+    <div class="card rendezvous">
+
+
+        <h2>
+            Mes derniers rendez-vous
+        </h2>
+
+
+        <table>
+
+
+            <tr>
+
+                <th>
+                    Date
+                </th>
+
+
+                <th>
+                    Médecin
+                </th>
+
+
+                <th>
+                    Statut
+                </th>
+
+            </tr>
+
+
+
+            {% for rdv in rendezvous %}
+
+
+            <tr>
+
+                <td>
+                    {{ rdv.date }}
+                </td>
+
+
+                <td>
+                    {{ rdv.specialiste.nom }}
+                </td>
+
+
+                <td>
+                    {{ rdv.statut }}
+                </td>
+
+
+            </tr>
+
+
+            {% empty %}
+
+
+            <tr>
+
+                <td colspan="3">
+
+                    Aucun rendez-vous
+
+                </td>
+
+            </tr>
+
+
+            {% endfor %}
+
+
+
+        </table>
+
+
+    </div>
+
+
+</div>

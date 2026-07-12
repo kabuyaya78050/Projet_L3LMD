@@ -1,0 +1,37 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'laboratoire.css' %}">
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>Détail de la demande</h2>
+
+        <p><b>Patient :</b> {{ demande.rendezvous.patient.nom }} {{ demande.rendezvous.patient.postnom }} {{ demande.rendezvous.patient.prenom }}</p>
+
+        <p><b>Téléphone :</b> {{ demande.rendezvous.patient.telephone }}</p>
+
+        <p><b>Test :</b> {{ demande.test_demande.nom }}</p>
+
+        <p><b>Plainte :</b> {{ demande.plainte_patient }}</p>
+
+        <p><b>Statut :</b> {{ demande.statut }}</p>
+
+        <p><b>Résultat :</b>
+            {% if demande.resultat_labo %}
+                {% for valeur in demande.resultat_labo.valeurs.all %}
+                    {{ valeur.libelle }}{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    Aucun résultat enregistré
+                {% endfor %}
+                {% if demande.resultat_labo.commentaire %}
+                    <br><small>{{ demande.resultat_labo.commentaire }}</small>
+                {% endif %}
+            {% else %}
+                Pas encore disponible
+            {% endif %}
+        </p>
+
+    </div>
+
+</div>

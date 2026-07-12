@@ -10,10 +10,21 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load local environment variables from a .env file when present.
+ENV_FILE = BASE_DIR / '.env'
+if ENV_FILE.exists():
+    for raw_line in ENV_FILE.read_text(encoding='utf-8').splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith('#') or '=' not in line:
+            continue
+        key, value = line.split('=', 1)
+        os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +36,7 @@ SECRET_KEY = 'django-insecure--gov+*u-21unv2(6zf_vf7&(qs7xbdt*8o0_jo_8hr_mz@+f%%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'testserver']
 
 
 # Application definition
@@ -38,6 +49,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'reception',
+    'medecin',
+    'laboratoire',
+    'patient',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +140,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = "/laboratoire/login/"
+
+# Wonyapay payment integration settings
+WONYAPAY_API_KEY = os.getenv("WONYAPAY_API_KEY", "") or os.getenv("WONYAPAY_SECRET_KEY", "") or os.getenv("WONYAPAY_TOKEN", "")
+WONYAPAY_MERCHANT_ID = os.getenv("WONYAPAY_MERCHANT_ID", "") or os.getenv("WONYAPAY_MERCHANT", "") or os.getenv("WONYAPAY_ACCOUNT_ID", "")
+WONYAPAY_BASE_URL = os.getenv("WONYAPAY_BASE_URL", "") or os.getenv("WONYAPAY_API_URL", "https://api.wonyapay.dev/mock/payments")
+WONYAPAY_API_SECRET = os.getenv("WONYAPAY_API_SECRET", "")

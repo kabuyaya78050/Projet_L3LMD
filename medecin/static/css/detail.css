@@ -1,0 +1,51 @@
+/* FORMULAIRE SUR UNE MEME LIGNE */
+.form-row {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    flex: 1;
+}
+
+/* Textarea plainte */
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Select test */
+.form-group select {
+    min-height: 48px;
+}
+
+/* Checkbox */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.checkbox-group label {
+    margin: 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+
+    .container {
+        flex-direction: column;
+    }
+
+    .patient-card,
+    .form-card {
+        width: 100%;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+}

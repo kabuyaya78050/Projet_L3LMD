@@ -1,0 +1,21 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'patient.css' %}">
+
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <div>
+            <h1>Paiement mobile</h1>
+            <p>Payer votre consultation depuis votre espace patient</p>
+        </div>
+        <a href="{% url 'dashboard_patient' %}" class="btn-danger">Retour</a>
+    </div>
+
+    <div class="card">
+        <h2>Informations de paiement</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-ajouter">Valider le paiement</button>
+        </form>
+    </div>
+</div>

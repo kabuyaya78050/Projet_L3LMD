@@ -1,0 +1,130 @@
+body{
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+    margin: 0;
+    padding: 20px;
+}
+
+.container{
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* barre du haut */
+
+.top-bar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+h1{
+    margin: 0;
+    color: #2c3e50;
+}
+
+/* boutons */
+
+.btn-retour{
+    background: #3498db;
+    color: white;
+    text-decoration: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.btn-retour:hover{
+    background: #2980b9;
+}
+
+/* carte */
+
+.card{
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* grille formulaire */
+
+.form-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* champ */
+
+.champ{
+    display: flex;
+    flex-direction: column;
+}
+
+.champ label{
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #34495e;
+}
+
+/* inputs django */
+
+.champ input,
+.champ select,
+.champ textarea{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.champ input:focus,
+.champ select:focus{
+    outline: none;
+    border-color: #3498db;
+}
+
+/* bouton */
+
+.form-actions{
+    margin-top: 25px;
+    text-align: right;
+}
+
+.form-actions button{
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 14px 22px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.form-actions button:hover{
+    background: #219150;
+}
+
+/* mobile */
+
+@media(max-width:768px){
+
+    .form-grid{
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions{
+        text-align: center;
+    }
+
+    .form-actions button{
+        width: 100%;
+    }
+}

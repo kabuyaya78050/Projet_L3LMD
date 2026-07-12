@@ -1,0 +1,21 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+
+<div class="login-container">
+
+    <form method="POST" class="login-box">
+        {% csrf_token %}
+
+        <h2>Connexion Médecin</h2>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <input type="text" name="username" placeholder="Nom d'utilisateur">
+        <input type="password" name="password" placeholder="Mot de passe">
+
+        <button type="submit">Se connecter</button>
+    </form>
+
+</div>

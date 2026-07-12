@@ -1,0 +1,62 @@
+```html
+{% load static %}
+<link rel="stylesheet" href="{% static 'laboratoire.css' %}">
+
+<div class="container">
+
+    <div class="card form-card">
+
+        <h2>Saisie du résultat laboratoire</h2>
+
+        <!-- Informations du patient -->
+        <div class="info-patient">
+            <p><b>Patient :</b> {{ demande.rendezvous.patient.nom|default:"-" }} {{ demande.rendezvous.patient.postnom|default:"" }} {{ demande.rendezvous.patient.prenom|default:"" }}</p>
+            <p><b>Test :</b> {{ demande.test_demande.nom|default:"-" }}</p>
+            <p><b>Plainte :</b> {{ demande.plainte_patient|default:"Aucune plainte" }}</p>
+            <p><b>Statut :</b> {{ demande.statut }}</p>
+        </div>
+
+        <hr>
+
+        <form method="POST" class="form-resultat">
+            {% csrf_token %}
+
+            <!-- Valeurs proposées -->
+            <div class="form-group">
+                <label><b>Valeurs disponibles</b></label>
+
+                <div class="valeurs-list">
+                    {% for checkbox in form.valeurs %}
+                        <div class="valeur-item">
+                            {{ checkbox.tag }}
+                            <span class="valeur-text">
+                                {{ checkbox.choice_label }}
+                            </span>
+                        </div>
+                    {% empty %}
+                        <p>Aucune valeur disponible pour ce test.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Commentaire -->
+            <div class="form-group">
+                {{ form.commentaire.label_tag }}
+                {{ form.commentaire }}
+            </div>
+
+            <!-- Statut -->
+            <div class="form-group">
+                {{ form.statut.label_tag }}
+                {{ form.statut }}
+            </div>
+
+            <button type="submit" class="btn-submit">
+                Enregistrer le résultat
+            </button>
+        </form>
+
+    </div>
+
+</div>
+```

@@ -1,0 +1,115 @@
+{\rtf1\ansi\deff0
+{\fonttbl{\f0 Arial;}}
+\viewkind4\uc1\pard\sa120\sl276\slmult1\f0\fs24
+\b Documentation du projet hospitalier\b0\par
+\par
+Ce document présente l’architecture, les modules, les flux fonctionnels et les étapes d’installation du projet Django de gestion hospitalière.\par
+\par
+\b 1. Vue d’ensemble\b0\par
+Le projet est une application web Django destinée à gérer le parcours patient dans un hôpital : réception des patients, prise de rendez-vous, suivi médical, demandes de laboratoire et consultation des résultats.\par
+\par
+Le système est organisé autour de plusieurs modules indépendants mais liés :\par
+- reception : gestion des patients à l’accueil\par
+- medecin : gestion des spécialistes et des rendez-vous\par
+- laboratoire : saisie des résultats d’analyses\par
+- patient : espace patient pour l’inscription, la connexion et la prise de rendez-vous\par
+\par
+\b 2. Technologies utilisées\b0\par
+- Langage : Python\par
+- Framework : Django 4.2\par
+- Base de données : PostgreSQL\par
+- Template système : Django templates\par
+- Authentification : modèle utilisateur Django intégré\par
+\par
+\b 3. Structure du projet\b0\par
+- manage.py : point d’entrée de la ligne de commande Django\par
+- fin_annee/ : configuration du projet et fichiers de routage global\par
+- reception/ : gestion des patients à l’accueil\par
+- medecin/ : gestion des spécialistes, rendez-vous et consultations\par
+- laboratoire/ : saisie et consultation des résultats de laboratoire\par
+- patient/ : espace patient et formulaire de prise de rendez-vous\par
+\par
+\b 4. Modules fonctionnels\b0\par
+\b 4.1 Module réception\b0\par
+Ce module permet à l’équipe d’accueil de :\par
+- lister les patients\par
+- ajouter un nouveau patient\par
+- modifier les informations d’un patient\par
+- envoyer un patient vers un spécialiste\par
+- suivre l’évolution du statut du dossier\par
+\par
+Les statuts principaux sont : réception, envoyé au spécialiste, en cours, terminé et envoyé au laboratoire.\par
+\par
+\b 4.2 Module médecin\b0\par
+Ce module gère les spécialistes et leur espace de travail. Il permet :\par
+- l’inscription et la connexion des médecins/spécialistes\par
+- la consultation des rendez-vous assignés\par
+- l’envoi d’une demande de laboratoire pour un patient\par
+- la consultation des résultats présents dans le système\par
+\par
+Le médecin peut ouvrir un rendez-vous, saisir le motif de la demande de laboratoire, puis consulter les résultats au moment opportun.\par
+\par
+\b 4.3 Module laboratoire\b0\par
+Le laboratoire reçoit les demandes émises depuis le module médecin. Il permet :\par
+- la connexion des utilisateurs du laboratoire\par
+- la consultation des demandes en attente ou traitées\par
+- la saisie des résultats d’analyse\par
+- la mise à jour du statut de la demande\par
+\par
+Les résultats saisis sont ensuite visibles dans le workflow médical.\par
+\par
+\b 4.4 Module patient\b0\par
+Le module patient propose une expérience simple pour le patient. Il permet :\par
+- la création d’un compte patient\par
+- la connexion à l’espace patient\par
+- l’accès au tableau de bord patient\par
+- la prise de rendez-vous\par
+\par
+Le patient dispose d’un espace personnel où il peut visualiser ses rendez-vous et ses actions associées.\par
+\par
+\b 5. Modèles principaux\b0\par
+Les principales entités du projet sont :\par
+- Patient (réception) : informations administratives et statut du dossier\par
+- Specialiste : médecin spécialiste lié à un utilisateur Django\par
+- RendezVous : rendez-vous associé à un patient et à un spécialiste\par
+- DemandeLaboratoire : requête de laboratoire faite à partir d’un rendez-vous\par
+- ResultatLaboratoire : résultat saisi par le laboratoire et associé à une demande\par
+- ProfilPatient : profil patient utilisé dans l’espace patient\par
+\par
+\b 6. Flux de travail\b0\par
+\b 6.1 Flux standard\b0\par
+1. L’accueil enregistre ou consulte un patient dans le module réception.\par
+2. Le patient est envoyé vers un spécialiste.\par
+3. Le spécialiste ouvre le rendez-vous et envoie une demande au laboratoire si nécessaire.\par
+4. Le laboratoire saisit les résultats.\par
+5. Le médecin consulte les résultats dans son interface.\par
+\par
+\b 7. Installation et démarrage\b0\par
+Prérequis :\par
+- Python 3.12\par
+- PostgreSQL installé et démarré\par
+- un utilisateur PostgreSQL avec une base de données nommée hopital\par
+\par
+Étapes :\par
+1. Créer et activer un environnement virtuel.\par
+2. Installer les dépendances Django et psycopg2.\par
+3. Configurer les paramètres de la base de données dans fin_annee/settings.py.\par
+4. Exécuter les migrations : python manage.py migrate\par
+5. Démarrer le serveur : python manage.py runserver\par
+\par
+\b 8. Tests et validation\b0\par
+Le projet dispose de tests Django pour les modules patient et médecin.\par
+Commande de validation :\par
+- ./env/bin/python manage.py test patient medecin\par
+\par
+\b 9. Notes de maintenance\b0\par
+- Les modèles sont répartis par domaine et suivent une structure Django standard.\par
+- Les templates sont organisés par application.\par
+- Les routes principales sont définies dans les fichiers urls.py de chaque application.\par
+- Les configurations sensibles sont à conserver dans des variables d’environnement, notamment les valeurs de connexion et les secrets.\par
+\par
+\b 10. Conclusion\b0\par
+Ce projet constitue une base fonctionnelle de gestion hospitalière orientée workflow. Il couvre la réception des patients, la prise de rendez-vous, la gestion médicale, les demandes de laboratoire et l’espace patient.\par
+\par
+Fin du document.\par
+}

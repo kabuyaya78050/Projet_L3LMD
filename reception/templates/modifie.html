@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Modifier patient</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/reception.css' %}"
+    >
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="top-bar">
+
+            <h1>✏️ Modifier le patient</h1>
+
+            <a
+                href="{% url 'reception' %}"
+                class="btn-retour"
+            >
+                ⬅ Retour à la liste
+            </a>
+
+        </div>
+
+        <div class="card">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="form-grid">
+
+                    <div class="champ">
+                        <label>Nom</label>
+                        {{ form.nom }}
+                    </div>
+
+                    <div class="champ">
+                        <label>Postnom</label>
+                        {{ form.postnom }}
+                    </div>
+
+                    <div class="champ">
+                        <label>Prénom</label>
+                        {{ form.prenom }}
+                    </div>
+
+                    <div class="champ">
+                        <label>Date naissance</label>
+                        {{ form.date_naissance }}
+                    </div>
+
+                    <div class="champ">
+                        <label>Téléphone</label>
+                        {{ form.telephone }}
+                    </div>
+
+                    <div class="champ">
+                        <label>Email</label>
+                        {{ form.email }}
+                    </div>
+
+                    <div class="champ">
+                        <label>En couple ?</label>
+                        {{ form.est_en_couple }}
+                    </div>
+
+                    <div class="champ">
+                        <label>Nom du mari</label>
+                        {{ form.nom_mari }}
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+
+                    <button type="submit">
+                        💾 Enregistrer les modifications
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

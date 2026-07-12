@@ -1,133 +1,177 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
-
     <meta charset="UTF-8">
-
     <title>Liste Patients</title>
 
-    <link
-        rel="stylesheet"
-        href="{% static 'css/reception.css' %}"
-    >
-
+    <link rel="stylesheet" href="{% static 'css/reception.css' %}">
 </head>
 
 <body>
 
-    <div class="top-bar">
+    <div class="container">
 
-        <h1>🏥 Liste des patients</h1>
+        <!-- =========================
+             TOP BAR
+        ========================== -->
+        <div class="top-bar">
 
-        <a
-            href="{% url 'ajoute' %}"
-            class="btn-ajouter"
-        >
-            ➕ Ajouter patient
-        </a>
-        
-        
+            <h1>🏥 Liste des patients</h1>
 
-    </div>
+            <a href="{% url 'ajoute' %}" class="btn-ajouter">
+                ➕ Ajouter patient
+            </a>
 
-    <div class="card liste">
+        </div>
 
-        <form method="GET">
+        <div class="card">
 
-            <div class="recherche-box">
+            <!-- =========================
+                 RECHERCHE
+            ========================== -->
+            <form method="GET">
 
-                <input
-                    type="text"
-                    name="recherche"
-                    placeholder="Rechercher..."
-                >
+                <div class="recherche-box">
 
-                <button type="submit">
-                    Rechercher
-                </button>
+                    <input
+                        type="text"
+                        name="recherche"
+                        placeholder="Rechercher un patient..."
+                        value="{{ request.GET.recherche }}"
+                    >
+
+                    <button type="submit">
+                        Rechercher
+                    </button>
+
+                </div>
+
+            </form>
+
+            <!-- =========================
+                 TABLE
+            ========================== -->
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Nom</th>
+                            <th>Postnom</th>
+                            <th>Prénom</th>
+                            <th>Date naissance</th>
+                            <th>Téléphone</th>
+                            <th>Email</th>
+                            <th>Couple</th>
+                            <th>Nom mari</th>
+                            <th>Statut</th>
+                            <th>Action</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for patient in patients %}
+
+                        <tr>
+
+                            <td>{{ patient.nom }}</td>
+                            <td>{{ patient.postnom }}</td>
+                            <td>{{ patient.prenom }}</td>
+
+                            <td>
+                                {{ patient.date_naissance|date:"d/m/Y" }}
+                            </td>
+
+                            <td>{{ patient.telephone }}</td>
+
+                            <td>
+                                {{ patient.email|default:"—" }}
+                            </td>
+
+                            <td>
+                                {% if patient.est_en_couple %}
+                                    Oui
+                                {% else %}
+                                    Non
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {{ patient.nom_mari|default:"—" }}
+                            </td>
+
+                            <!-- =========================
+                                 STATUT COULEUR
+                            ========================== -->
+                            <td>
+
+                                {% if patient.statut == "reception" %}
+                                    🟡 Réception
+                                {% elif patient.statut == "envoye" %}
+                                    🔷 Envoyé au spécialiste
+                                {% elif patient.statut == "en_cours" %}
+                                    🔵 En cours
+                                {% elif patient.statut == "labo" %}
+                                    🧪 Envoyé au laboratoire
+                                {% elif patient.statut == "termine" %}
+                                    🟢 Terminé
+                                {% else %}
+                                    ⚪ Inconnu
+                                {% endif %}
+
+                            </td>
+
+                            <!-- =========================
+                                 ACTION
+                            ========================== -->
+                            <td class="actions">
+
+                                {% if patient.statut == "reception" %}
+
+                                <a
+                                    class="btn-envoyer"
+                                    href="{% url 'envoyer_medecin' patient.id %}"
+                                >
+                                    📤 Envoyer
+                                </a>
+
+                                {% else %}
+
+                                <span class="btn-envoye">
+                                    ✔ Déjà traité
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td colspan="10" class="vide">
+                                Aucun patient trouvé.
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
 
             </div>
 
-        </form>
-
-        <table>
-
-            <tr>
-
-                <th>Nom</th>
-                <th>Postnom</th>
-                <th>Prénom</th>
-                <th>Date naissance</th>
-                <th>Téléphone</th>
-                <th>Email</th>
-                <th>Couple</th>
-                <th>Nom mari</th>
-                <th>Statut</th>
-                <th>Action</th>
-
-            </tr>
-
-            {% for patient in patients %}
-
-            <tr>
-
-                <td>{{ patient.nom }}</td>
-
-                <td>{{ patient.postnom }}</td>
-
-                <td>{{ patient.prenom }}</td>
-
-                <td>
-                    {{ patient.date_naissance|date:"d/m/Y" }}
-                </td>
-
-                <td>{{ patient.telephone }}</td>
-
-                <td>{{ patient.email }}</td>
-
-                <td>
-
-                    {% if patient.est_en_couple %}
-                        Oui
-                    {% else %}
-                        Non
-                    {% endif %}
-
-                </td>
-
-                <td>{{ patient.nom_mari }}</td>
-
-                <td>{{ patient.statut }}</td>
-
-                <td>
-
-                    {% if patient.statut == 'reception' %}
-
-                    <a
-                        class="btn-envoyer"
-                        href="{% url 'envoyer_medecin' patient.id %}"
-                    >
-                        Envoyer
-                    </a>
-
-                    {% else %}
-
-                    <span class="btn-envoye">
-                        Envoyé
-                    </span>
-
-                    {% endif %}
-
-                </td>
-
-            </tr>
-
-            {% endfor %}
-
-        </table>
+        </div>
 
     </div>
 

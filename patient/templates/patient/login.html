@@ -1,0 +1,25 @@
+<h2>Connexion Patient</h2>
+
+
+<form method="POST">
+
+{% csrf_token %}
+
+
+<input 
+name="username"
+placeholder="Nom utilisateur">
+
+
+<input 
+type="password"
+name="password"
+placeholder="Mot de passe">
+
+
+<button>
+Connexion
+</button>
+
+
+</form>

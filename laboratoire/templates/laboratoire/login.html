@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Laboratoire</title>
+</head>
+<body>
+
+<h2>Connexion Laboratoire</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit">Se connecter</button>
+</form>
+
+{% if form.errors %}
+    <p style="color:red;">Identifiants incorrects</p>
+{% endif %}
+
+</body>
+</html>

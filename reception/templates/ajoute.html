@@ -1,40 +1,31 @@
 {% load static %}
 
+
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
-
     <meta charset="UTF-8">
-
     <title>Ajouter Patient</title>
 
-    <link
-        rel="stylesheet"
-        href="{% static 'css/reception.css' %}"
-    >
-
+    <link rel="stylesheet" href="{% static 'css/ajoute.css' %}">
 </head>
 
 <body>
 
+    <!-- TOP BAR -->
     <div class="top-bar">
-
         <h1>➕ Ajouter un patient</h1>
 
-        <a
-            href="{% url 'reception' %}"
-            class="btn-ajouter"
-        >
+        <a href="{% url 'reception' %}" class="btn-ajouter">
             📋 Voir la liste
         </a>
-
     </div>
 
+    <!-- FORMULAIRE -->
     <div class="card formulaire-page">
 
         <form method="POST">
-
             {% csrf_token %}
 
             <div class="champ">
@@ -53,7 +44,7 @@
             </div>
 
             <div class="champ">
-                <label>Date naissance</label>
+                <label>Date de naissance</label>
                 {{ form.date_naissance }}
             </div>
 
@@ -68,12 +59,14 @@
             </div>
 
             <div class="champ">
-                <label>En couple ?</label>
-                {{ form.est_en_couple }}
+                <label>
+                    {{ form.est_en_couple }} En couple ?
+                </label>
             </div>
 
-            <div class="champ">
-                <label>Nom du mari</label>
+            <!-- Conjoint -->
+            <div class="champ" id="champ-mari">
+                <label>Nom du conjoint</label>
                 {{ form.nom_mari }}
             </div>
 
@@ -84,6 +77,32 @@
         </form>
 
     </div>
+
+    <!-- SCRIPT -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const checkbox = document.getElementById("id_est_en_couple");
+            const champMari = document.getElementById("champ-mari");
+
+            if (!checkbox || !champMari) return;
+
+            function toggleMari() {
+                if (checkbox.checked) {
+                    champMari.style.display = "block";
+                } else {
+                    champMari.style.display = "none";
+
+                    // optionnel: vider champ
+                    const input = champMari.querySelector("input");
+                    if (input) input.value = "";
+                }
+            }
+
+            checkbox.addEventListener("change", toggleMari);
+            toggleMari(); // initial state
+        });
+    </script>
 
 </body>
 </html>

@@ -1,0 +1,41 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/envoye.css' %}">
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>📤 Envoyer au spécialiste</h2>
+
+        <div class="patient-info">
+            <b>Patient :</b> {{ patient.nom }}
+        </div>
+
+        {% if error %}
+            <div class="error-box">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label for="specialiste">Choisir un spécialiste :</label>
+
+            <select name="specialiste" id="specialiste" required>
+                <option value="">-- Sélectionner un spécialiste --</option>
+
+                {% for s in specialistes %}
+                    <option value="{{ s.id }}">
+                        {{ s.nom }} ({{ s.specialite }})
+                    </option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">🚀 Envoyer vers le spécialiste</button>
+
+        </form>
+
+    </div>
+
+</div>

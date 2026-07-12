@@ -1,0 +1,80 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'laboratoire.css' %}">
+
+<div class="header">
+    <h2>Dashboard Laboratoire</h2>
+</div>
+
+<div class="stats">
+
+    <div class="card blue">
+        <h3>Total</h3>
+        <p>{{ total }}</p>
+    </div>
+
+    <div class="card orange">
+        <h3>En attente</h3>
+        <p>{{ attente }}</p>
+    </div>
+
+    <div class="card purple">
+        <h3>En cours</h3>
+        <p>{{ encours }}</p>
+    </div>
+
+    <div class="card green">
+        <h3>Terminé</h3>
+        <p>{{ termine }}</p>
+    </div>
+
+</div>
+
+<div class="table-container">
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Test</th>
+                <th>Statut</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for d in demandes %}
+
+            <tr>
+
+                <td>{{ d.rendezvous.patient.nom }} {{ d.rendezvous.patient.postnom }}</td>
+
+                <td>{{ d.test_demande.nom }}</td>
+
+                <td>
+                    <span class="badge {{ d.statut }}">
+                        {{ d.statut }}
+                    </span>
+                </td>
+
+                <td>{{ d.date_creation }}</td>
+
+                <td>
+
+                    <a href="{% url 'detail_demande' d.id %}" class="btn">Voir</a>
+
+                    <a href="{% url 'resultat_laboratoire' d.id %}" class="btn green-btn">Résultat</a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>

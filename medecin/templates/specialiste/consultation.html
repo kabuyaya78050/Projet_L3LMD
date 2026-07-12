@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Consultation</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+
+        .card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: white;
+            font-size: 12px;
+        }
+
+        .termine { background: green; }
+        .encours { background: orange; }
+        .attente { background: gray; }
+    </style>
+</head>
+
+<body>
+
+<h2>Consultation du patient</h2>
+
+<p><strong>Nom :</strong> {{ rdv.patient.nom }} {{ rdv.patient.postnom }}</p>
+<p><strong>Date :</strong> {{ rdv.date }} à {{ rdv.heure }}</p>
+
+<hr>
+
+<h3>Résultats du laboratoire</h3>
+
+{% for demande in demandes_labo %}
+    <div class="card">
+
+        <p><strong>Test :</strong> {{ demande.test_demande.nom }}</p>
+
+        <p><strong>Plainte :</strong> {{ demande.plainte_patient }}</p>
+
+        <p><strong>Résultat :</strong>
+            {% if demande.resultat_labo %}
+                {% for valeur in demande.resultat_labo.valeurs.all %}
+                    {{ valeur.libelle }}{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    Aucun résultat enregistré
+                {% endfor %}
+                {% if demande.resultat_labo.commentaire %}
+                    <br><small>{{ demande.resultat_labo.commentaire }}</small>
+                {% endif %}
+            {% else %}
+                Pas encore disponible
+            {% endif %}
+        </p>
+
+        <p>
+            <span class="badge {{ demande.statut }}">
+                {{ demande.statut }}
+            </span>
+        </p>
+
+    </div>
+
+{% empty %}
+    <p>Aucun résultat disponible pour ce patient.</p>
+{% endfor %}
+
+</body>
+</html>

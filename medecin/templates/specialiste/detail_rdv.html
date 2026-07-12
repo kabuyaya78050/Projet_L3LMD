@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Détail Rendez-vous</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .box { padding: 15px; border: 1px solid #ccc; border-radius: 10px; }
+        label { font-weight: bold; }
+        textarea, select { width: 100%; padding: 8px; margin-top: 5px; }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            background: #2ecc71;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Envoyer au laboratoire</h2>
+
+<div class="box">
+
+    <p><strong>Patient :</strong> {{ rdv.patient.nom }} {{ rdv.patient.postnom }}</p>
+    <p><strong>Date :</strong> {{ rdv.date }} à {{ rdv.heure }}</p>
+
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Plainte du patient</label>
+        <textarea name="plainte_patient" required></textarea>
+
+        <br><br>
+
+        <label>Choisir un test</label>
+        <select name="test_demande" required>
+            <option value="">-- Sélectionner --</option>
+
+            {% for test in tests %}
+                <option value="{{ test.id }}">
+                    {{ test.nom }} ({{ test.specialite }})
+                </option>
+            {% empty %}
+                <option disabled>Aucun test disponible</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Envoyer au laboratoire</button>
+
+    </form>
+
+</div>
+
+</body>
+</html>
